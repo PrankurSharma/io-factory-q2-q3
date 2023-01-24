@@ -1,0 +1,58 @@
+//This is the solution to first part of the problem:(to find water that can be stored in between the buildings)
+
+#include <bits/stdc++.h>
+using namespace std;
+//arr[]: array of height of buildings
+    //find max element to the left of all the elements
+    vector<int> maxToLeft(vector<int>& arr, int n){
+        vector<int> mxl(n);
+        mxl[0] = arr[0];
+        for(int i=1;i<n;i++){
+            mxl[i] = max(mxl[i-1], arr[i]);
+        }
+        return mxl;
+    }
+    //find max element to the right of all the elements
+    vector<int> maxToRight(vector<int>& arr, int n){
+        vector<int> mxr(n);
+        mxr[n-1] = arr[n-1];
+        for(int i=n-2;i>=0;i--){
+            mxr[i] = max(mxr[i+1], arr[i]);
+        }
+        return mxr;
+    }
+    int trappingWater(vector<int>& arr, int n){
+        // Code here
+        vector<int> water(n);
+        vector<int> mxl = maxToLeft(arr, n);
+        vector<int> mxr = maxToRight(arr, n);
+        for(int i=0;i<n;i++){
+            water[i] = min(mxl[i], mxr[i]) - arr[i];
+        }
+        int sum = 0;
+        for(int i=0;i<n;i++){
+            sum += water[i];
+        }
+        return sum;
+    }
+int main() {
+    //arr:   0 4 0 0 0 6 0 6 4 0 
+    //mxl:   0 4 4 4 4 6 6 6 6 6
+    //mxr:   6 6 6 6 6 6 6 6 4 0
+    //water: 0 0 4 4 4 0 6 0 0 0
+    //sum: 18
+    cout<<"Enter height of buildings(Enter a negative number to display the output):"<<endl;
+    vector<int> arr;
+    int x;
+    while(cin >> x){
+        if(x < 0){
+            break;
+        }
+        else{
+            arr.push_back(x);
+        }
+    }
+    int res = trappingWater(arr, arr.size());
+    cout<< "Water Stored: " << res;
+    return 0;
+}
