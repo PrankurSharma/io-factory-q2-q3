@@ -43,7 +43,6 @@ void func(int N, int W, int wt[], int val[]) {
 }
 
 int main() {
-    // Write C++ code here
     int W;
     cout<<"Enter value of n: ";
     cin>>W;
